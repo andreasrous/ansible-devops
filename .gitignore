@@ -1,0 +1,19 @@
+# Ansible runtime and backups
+*.original
+*.tmp
+*.bkp
+*.retry
+*.*~
+*.swp
+
+# Vagrant
+.vagrant
+*.pub
+*.log
+
+# Certificates
+*.crt
+*.key
+
+# VS Code
+.vscode/
