@@ -10,20 +10,20 @@
       become: true
 
   tasks:
-    - name: "debug appdir"
+    - name: "debug backend_dir"
       ansible.builtin.debug:
-        msg: "appdir {{ ansible_user_dir }}"
+        msg: "backend_dir {{ ansible_user_dir }}"
 
     - name: "Clone the Spring repository"
       git:
         repo: "https://github.com/andreasrous/agri-coop.git"
-        dest: "{{ ansible_user_dir }}"
+        dest: "{{ project_root }}"
         version: "{{ branch }}"
         force: yes
 
     - name: "Populate application.properties"
       lineinfile:
-        dest: "{{ appdir }}/src/main/resources/application.properties"
+        dest: "{{ backend_dir }}/src/main/resources/application.properties"
         state: present
         regexp: "^{{ item.key }}="
         line: "{{ item.key }}={{ item.value }}"
@@ -33,12 +33,12 @@
     - name: "Build the Spring application"
       command: "./mvnw package -Dmaven.test.skip "
       args:
-        chdir: "{{ appdir }}"
+        chdir: "{{ backend_dir }}"
 
     #      - name: "Run the Spring application"
     #        command: "java -jar target/agri-coop-0.0.1-SNAPSHOT.jar"
     #        args:
-    #            chdir: "{{ appdir }}"
+    #            chdir: "{{ backend_dir }}"
 
     - name: copy spring service file
       template:

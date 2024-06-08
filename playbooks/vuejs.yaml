@@ -54,16 +54,16 @@
     - name: "Clone the Vue repository"
       git:
         repo: "https://github.com/andreasrous/agri-coop.git"
-        dest: "{{ ansible_user_dir }}"
+        dest: "{{ project_root }}"
         version: "{{ branch }}"
         force: yes
 
     - name: copy env file
-      shell: "cp {{frontendappdir}}/.env.example {{frontendappdir}}/.env"
+      shell: "cp {{ frontend_dir }}/.env.example {{ frontend_dir }}/.env"
 
     - name: populate  ~/.env
       lineinfile:
-        dest: "{{frontendappdir}}/.env"
+        dest: "{{ frontend_dir }}/.env"
         state: present
         regexp: "^{{item.key}}="
         line: "{{item.key}}='{{item.value}}'"
@@ -74,17 +74,17 @@
       shell: |
         export PATH=$PATH:~/.nvm/versions/node/v20.12.1/bin; npm install
       args:
-        chdir: "{{ frontendappdir }}"
+        chdir: "{{ frontend_dir }}"
 
     - name: "Build the Vue.js application"
       shell: |
         export PATH=$PATH:~/.nvm/versions/node/v20.12.1/bin; npm run build
       args:
-        chdir: "{{ frontendappdir }}"
+        chdir: "{{ frontend_dir }}"
 
     - name: Copy dist in nginx location
       copy:
-        src: "{{ frontendappdir }}/dist/"
+        src: "{{ frontend_dir }}/dist/"
         dest: "{{ site_location }}"
         remote_src: True
         mode: 7777
