@@ -53,8 +53,8 @@
   tasks:
     - name: "Clone the Vue repository"
       git:
-        repo: "https://github.com/andreasrous/agri-coop.git"
-        dest: "{{ project_root }}"
+        repo: "https://github.com/andreasrous/devops-frontend.git"
+        dest: "{{ frontend_dir }}"
         version: "{{ branch }}"
         force: yes
 

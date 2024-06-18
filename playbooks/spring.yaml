@@ -16,8 +16,8 @@
 
     - name: "Clone the Spring repository"
       git:
-        repo: "https://github.com/andreasrous/agri-coop.git"
-        dest: "{{ project_root }}"
+        repo: "https://github.com/andreasrous/devops-backend.git"
+        dest: "{{ backend_dir }}"
         version: "{{ branch }}"
         force: yes
 

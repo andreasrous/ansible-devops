@@ -1,6 +1,5 @@
-project_root: "{{ ansible_user_dir }}/agri-coop"
-backend_dir: "{{ project_root }}/backend"
-frontend_dir: "{{ project_root }}/frontend"
+backend_dir: "{{ ansible_user_dir }}/backend"
+frontend_dir: "{{ ansible_user_dir }}/frontend"
 branch: "main"
 appuser: "{{ ansible_user_id }}"
 appgroup: "{{ ansible_user_gid }}"
