@@ -12,7 +12,7 @@
         docker_installed: "{{ docker_version_result.rc == 0 }}"
 
     - name: Include install_docker playbook if Docker is not installed
-      include_tasks: import_docker_playbook.yml
+      include_tasks: docker.yaml
       when: not docker_installed
 
     - name: "Clone the Spring repository"

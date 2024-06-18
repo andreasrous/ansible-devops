@@ -2,6 +2,11 @@ Vagrant.configure("2") do |config|
   config.hostmanager.enabled = true
   config.vm.box = "ubuntu/jammy64"
 
+  config.vm.provider :virtualbox do |v|
+    v.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
+    v.customize ["modifyvm", :id, "--uartmode1", "file", File::NULL]
+  end
+
   config.vm.define "control", primary: true do |h|
     h.vm.hostname = "control"
     h.vm.network "private_network", ip: "192.168.56.10"
@@ -23,6 +28,12 @@ Vagrant.configure("2") do |config|
   config.vm.define "frontserver" do |h|
     h.vm.hostname = "frontserver"
     h.vm.network "private_network", ip: "192.168.56.103"
+    h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
+  end
+
+  config.vm.define "deploy" do |h|
+    h.vm.hostname = "deploy"
+    h.vm.network "private_network", ip: "192.168.56.104"
     h.vm.provision :shell, inline: 'cat /vagrant/control.pub >> /home/vagrant/.ssh/authorized_keys'
   end
 end

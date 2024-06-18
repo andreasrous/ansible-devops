@@ -3,7 +3,7 @@
   hosts: all
 
   tasks:
-    - name: print hostvars
+    - name: Print hostvars
       debug:
         msg: "hostvars is {{ hostvars }}"
 

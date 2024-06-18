@@ -10,7 +10,7 @@
         state: present
         update_cache: yes
 
-    - name: install pip3
+    - name: Install pip3
       apt:
         name: ["python3-pip"]
         state: present
@@ -24,12 +24,12 @@
         - psycopg2-binary
 
   tasks:
-    - name: check if postgres is initialized
+    - name: Check if postgres is initialized
       ansible.builtin.stat:
         path: /var/lib/postgresql/14/main
       register: postgres_data
 
-    - name: debug stat
+    - name: Debug stat
       ansible.builtin.debug:
         msg: "postgres data debug {{ postgres_data }}"
 

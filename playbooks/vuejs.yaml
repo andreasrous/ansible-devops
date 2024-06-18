@@ -32,7 +32,7 @@
         line: source ~/.nvm/nvm.sh # This will make sure Node is on the user's PATH
         create: yes
 
-    - name: "debug"
+    - name: "Debug"
       ansible.builtin.debug:
         msg: "PATH : {{ ansible_env.PATH }}"
 
@@ -58,10 +58,10 @@
         version: "{{ branch }}"
         force: yes
 
-    - name: copy env file
+    - name: Copy env file
       shell: "cp {{ frontend_dir }}/.env.example {{ frontend_dir }}/.env"
 
-    - name: populate  ~/.env
+    - name: Populate ~/.env
       lineinfile:
         dest: "{{ frontend_dir }}/.env"
         state: present
@@ -92,13 +92,13 @@
       notify: restart nginx
       become: true
 
-    - name: copy nginx conf file
+    - name: Copy nginx conf file
       template:
         src: ../files/nginx.vue.j2
         dest: "/etc/nginx/sites-available/vue"
       become: true
 
-    - name: enable vue site in nginx
+    - name: Enable vue site in nginx
       file:
         src: "/etc/nginx/sites-available/vue"
         dest: "/etc/nginx/sites-enabled/vue"

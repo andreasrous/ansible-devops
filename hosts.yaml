@@ -10,10 +10,15 @@ appservers:
   hosts:
     appserver-vm:
       ansible_host: appserver
-    frontend-vm:
+    frontserver-vm:
       ansible_host: frontserver
 
 dbservers:
   hosts:
     dbserver-vm:
       ansible_host: dbserver
+
+deploy:
+  hosts:
+    deploy-vm:
+      ansible_host: deploy

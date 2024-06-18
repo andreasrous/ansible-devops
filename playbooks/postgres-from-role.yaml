@@ -4,7 +4,7 @@
     - role: geerlingguy.postgresql
       become: true
   tasks:
-    - name: change listen_addresses to '*'
+    - name: Change listen_addresses to '*'
       lineinfile:
         dest: /etc/postgresql/14/main/postgresql.conf
         regexp: "^#listen_addresses"

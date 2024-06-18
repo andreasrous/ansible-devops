@@ -13,17 +13,17 @@
         - apt-transport-https
         - ca-certificates
 
-    - name: get key
+    - name: Get key
       shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
       #ignore_errors: yes
 
-    - name: Add docker ppa
+    - name: Add Docker PPA
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
         state: present
         update_cache: yes
 
-    - name: install docker
+    - name: Install Docker
       apt:
         name: "{{item}}"
         state: present
@@ -32,13 +32,13 @@
         - docker-ce
         - docker-compose
 
-    - name: start docker service
+    - name: Start Docker Service
       service:
         name: docker
         state: started
         enabled: true
 
-    - name: adding existing user to group docker
+    - name: Adding existing user to group docker
       user:
         name: "{{ ansible_user_id }}"
         groups: docker

@@ -3,7 +3,7 @@ app:
     server.port: "{{ app_port }}"
     spring.datasource.username: appuser
     spring.datasource.password: apppassword
-    spring.datasource.url: jdbc:postgresql://dbserver:5432/appdb
+    spring.datasource.url: jdbc:postgresql://{{ db_server_url }}:5432/appdb
 
 service:
   workingdir: "{{ backend_dir }}"

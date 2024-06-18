@@ -10,7 +10,7 @@
       become: true
 
   tasks:
-    - name: "debug backend_dir"
+    - name: "Debug backend_dir"
       ansible.builtin.debug:
         msg: "backend_dir {{ ansible_user_dir }}"
 
@@ -40,7 +40,7 @@
     #        args:
     #            chdir: "{{ backend_dir }}"
 
-    - name: copy spring service file
+    - name: Copy spring service file
       template:
         src: ../files/spring.service.j2
         dest: "/etc/systemd/system/spring.service"
@@ -48,13 +48,13 @@
       become_user: root
       notify: restart spring
 
-    - name: reload spring service
+    - name: Reload spring service
       service:
         name: spring
         state: restarted
       become: true
 
-    - name: ensure spring service started
+    - name: Ensure spring service started
       service:
         name: spring
         state: started
@@ -67,13 +67,13 @@
         update_cache: yes
       become: true
 
-    - name: copy nginx conf file
+    - name: Copy nginx conf file
       template:
         src: ../files/nginx.http.j2
         dest: "/etc/nginx/sites-available/spring"
       become: true
 
-    - name: enable spring site in nginx
+    - name: Enable spring site in nginx
       file:
         src: "/etc/nginx/sites-available/spring"
         dest: "/etc/nginx/sites-enabled/spring"
