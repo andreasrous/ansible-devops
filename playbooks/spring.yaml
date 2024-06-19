@@ -66,12 +66,14 @@
         name: nginx
         update_cache: yes
       become: true
+      when: deploy_nginx | default(true) | bool
 
     - name: Copy nginx conf file
       template:
         src: ../files/nginx.http.j2
         dest: "/etc/nginx/sites-available/spring"
       become: true
+      when: deploy_nginx | default(true) | bool
 
     - name: Enable spring site in nginx
       file:
@@ -79,6 +81,7 @@
         dest: "/etc/nginx/sites-enabled/spring"
         state: link
       become: true
+      when: deploy_nginx | default(true) | bool
       notify: restart nginx
 
     - name: de-activate default nginx site
@@ -86,6 +89,7 @@
         path: /etc/nginx/sites-enabled/default
         state: absent
       become: true
+      when: deploy_nginx | default(true) | bool
       notify: restart nginx
 
   handlers:
