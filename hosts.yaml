@@ -12,13 +12,10 @@ appservers:
       ansible_host: appserver
     frontserver-vm:
       ansible_host: frontserver
+    deploy-vm:
+      ansible_host: deploy
 
 dbservers:
   hosts:
     dbserver-vm:
       ansible_host: dbserver
-
-deploy:
-  hosts:
-    deploy-vm:
-      ansible_host: deploy
