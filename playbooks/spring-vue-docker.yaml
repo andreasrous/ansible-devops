@@ -11,8 +11,8 @@
       set_fact:
         docker_installed: "{{ docker_version_result.rc == 0 }}"
 
-    - name: Include docker.yaml if Docker is not installed
-      include_tasks: docker.yaml
+    - name: Include docker tasks if Docker is not installed
+      include_tasks: ../tasks/docker-tasks.yaml
       when: not docker_installed
 
     - name: "Clone the Spring repository"

@@ -1,41 +1,16 @@
 ---
-- name: Install basic packages
-  apt:
-    name: "{{item}}"
-    state: present
-    update_cache: true
-  loop:
-    - software-properties-common
-    - curl
-    - apt-transport-https
-    - ca-certificates
+- hosts: all
+  become: true
+  tasks:
+    - name: Check if Docker is installed
+      shell: docker --version && docker compose version
+      register: docker_version_result
+      ignore_errors: true
 
-- name: Get key
-  shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+    - name: Set Docker installed fact
+      set_fact:
+        docker_installed: "{{ docker_version_result.rc == 0 }}"
 
-- name: Add Docker PPA
-  apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
-    state: present
-    update_cache: yes
-
-- name: Install Docker
-  apt:
-    name: "{{item}}"
-    state: present
-    update_cache: true
-  loop:
-    - docker-ce
-    - docker-compose
-
-- name: Start Docker Service
-  service:
-    name: docker
-    state: started
-    enabled: true
-
-- name: Adding existing user to group docker
-  user:
-    name: "{{ ansible_user_id }}"
-    groups: docker
-    append: yes
+    - name: Include docker tasks if Docker is not installed
+      include_tasks: ../tasks/docker-tasks.yaml
+      when: not docker_installed
